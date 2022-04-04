@@ -32,7 +32,10 @@ namespace ReviewAPI.Repository
         {
             var review = _context.Reviews.Include(x => x.Game).FirstOrDefault(x => x.Id == id);
             if (review == null)
+            {
                 return null;
+            }
+
             ReviewDTO reviewDTO = new(review.Id, review.Text, review.Rating, review.Game.Id);
             return reviewDTO;
         }
@@ -46,7 +49,10 @@ namespace ReviewAPI.Repository
         {
             var game = _context.Games.Find(item.GameId);
             if (game == null)
+            {
                 return false;
+            }
+
             Review review = new Review(item.Text, item.Rating, game);
             _context.Reviews.Add(review);
             Save();
@@ -62,7 +68,10 @@ namespace ReviewAPI.Repository
         {
             var review = _context.Reviews.FirstOrDefault(x => x.Id == item.Id);
             if (review == null)
+            {
                 return false;
+            }
+
             review.Text = item.Text;
             review.Rating = item.Rating;
             _context.Update(review);
@@ -79,7 +88,10 @@ namespace ReviewAPI.Repository
         {
             var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
             if (review == null)
+            {
                 return false;
+            }
+
             _context.Reviews.Remove(review);
             Save();
             return true;

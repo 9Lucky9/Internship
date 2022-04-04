@@ -18,7 +18,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Add([FromBody] Game game)
         {
             if (_gameRepository.Create(game))
+            {
                 return Ok();
+
+            }
             return BadRequest();
         }
 
@@ -31,7 +34,10 @@ namespace ReviewAPI.Controllers
         {
             var item = _gameRepository.Get(id);
             if (item != null)
+            {
                 return Ok(item);
+
+            }
             return NotFound();
         }
 
@@ -43,7 +49,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Delete(int id)
         {
             if (_gameRepository.Remove(id))
+            {
                 return NoContent();
+
+            }
             return NotFound();
         }
 
@@ -55,7 +64,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Update([FromBody] Game game)
         {
             if (_gameRepository.Update(game))
+            {
                 return Ok();
+
+            }
             return NotFound();
         }
 

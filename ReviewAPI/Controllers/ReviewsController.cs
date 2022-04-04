@@ -18,7 +18,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Add([FromBody] ReviewDTO review)
         {
             if (_reviewsRepository.Create(review))
+            {
                 return Ok();
+            }
+
             return NotFound();
         }
 
@@ -31,7 +34,10 @@ namespace ReviewAPI.Controllers
         {
             var review = _reviewsRepository.Get(id);
             if (review == null)
+            {
                 return NotFound();
+            }
+
             return Ok(review);
         }
 
@@ -43,7 +49,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Delete(int id)
         {
             if (_reviewsRepository.Remove(id))
+            {
                 return NoContent();
+            }
+
             return NotFound();
         }
 
@@ -55,7 +64,10 @@ namespace ReviewAPI.Controllers
         public ActionResult Update([FromBody] ReviewDTO review)
         {
             if (_reviewsRepository.Update(review))
+            {
                 return Ok();
+            }
+
             return NotFound();
         }
 

@@ -38,7 +38,10 @@ namespace ReviewAPI.Repository
         public bool Create(Game item)
         {
             if (item == null)
+            {
                 return false;
+            }
+
             _context.Games.Add(item);
             Save();
             return true;
@@ -53,7 +56,9 @@ namespace ReviewAPI.Repository
         {
             var game = _context.Games.FirstOrDefault(x => x.Id == item.Id);
             if (game == null)
+            {
                 return false;
+            }
             _context.Update(item);
             Save();
             return true;
@@ -68,7 +73,10 @@ namespace ReviewAPI.Repository
         {
             var game = _context.Games.FirstOrDefault(x => x.Id == id);
             if (game == null)
+            {
                 return false;
+            }
+
             _context.Games.Remove(game);
             Save();
             return true;
@@ -83,7 +91,10 @@ namespace ReviewAPI.Repository
         {
             var game = _context.Games.Find(gameId);
             if (game == null)
+            {
                 return null;
+            }
+
             var reviews = (from review in _context.Reviews.ToList()
                            where review.GameId == gameId
                            select review).ToList();
@@ -107,7 +118,10 @@ namespace ReviewAPI.Repository
             {
                 var reviews = GetReviewsOnGame(game.Id);
                 if (!reviews.Any())
+                {
                     continue;
+                }
+
                 var tuple = Tuple.Create(GetGameAverageScore(reviews), game);
                 gamesScores.Add(tuple);
             }
@@ -132,7 +146,10 @@ namespace ReviewAPI.Repository
                                   where review.Game.Id == gameId
                                   select review;
             if(!filteredReviews.Any())
+            {
                 return new List<Review>();
+            }
+
             return filteredReviews.ToList();
         }
 
