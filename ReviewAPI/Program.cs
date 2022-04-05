@@ -7,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(opt =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    { 
+    opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
         Version = "v1",
         Title = "ReviewAPI",
         Description = "API для создания рецензий на игры"
@@ -18,13 +18,14 @@ builder.Services.AddSwaggerGen(c =>
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    opt.IncludeXmlComments(xmlPath);
 }
 );
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetSection("ReviewDatabase").Value);
+    var connectionString = builder.Configuration.GetConnectionString("ReviewDatabase");
+    options.UseSqlServer(connectionString);
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
@@ -37,6 +38,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
