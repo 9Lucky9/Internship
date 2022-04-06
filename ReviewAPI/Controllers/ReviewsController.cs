@@ -8,7 +8,12 @@ namespace ReviewAPI.Controllers
     [Route("api/reviews")]
     public class ReviewsController : ControllerBase
     {
-        private ReviewRepository _reviewsRepository = new();
+        private IReview _iReview;
+
+        public ReviewsController(IReview iReview)
+        {
+            _iReview = iReview;
+        }
 
         /// <summary>
         /// Добавить рецензию 
@@ -17,7 +22,7 @@ namespace ReviewAPI.Controllers
         [HttpPost]
         public ActionResult Add([FromBody] ReviewDTO review)
         {
-            if (_reviewsRepository.Create(review))
+            if (_iReview.Create(review))
             {
                 return Ok();
             }
@@ -32,7 +37,7 @@ namespace ReviewAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var review = _reviewsRepository.Get(id);
+            var review = _iReview.Get(id);
             if (review == null)
             {
                 return NotFound();
@@ -48,7 +53,7 @@ namespace ReviewAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            if (_reviewsRepository.Remove(id))
+            if (_iReview.Remove(id))
             {
                 return NoContent();
             }
@@ -63,7 +68,7 @@ namespace ReviewAPI.Controllers
         [HttpPut]
         public ActionResult Update([FromBody] ReviewDTO review)
         {
-            if (_reviewsRepository.Update(review))
+            if (_iReview.Update(review))
             {
                 return Ok();
             }

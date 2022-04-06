@@ -8,7 +8,13 @@ namespace ReviewAPI.Controllers
     [Route("api/games")]
     public class GamesController : ControllerBase
     {
-        private GameRepository _gameRepository = new();
+
+        private IGame _iGame;
+
+        public GamesController(IGame igame)
+        {
+            _iGame = igame;
+        }
 
         /// <summary>
         /// Добавить игру
@@ -17,10 +23,9 @@ namespace ReviewAPI.Controllers
         [HttpPost]
         public ActionResult Add([FromBody] Game game)
         {
-            if (_gameRepository.Create(game))
+            if (_iGame.Create(game))
             {
                 return Ok();
-
             }
             return BadRequest();
         }
@@ -32,7 +37,7 @@ namespace ReviewAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var item = _gameRepository.Get(id);
+            var item = _iGame.Get(id);
             if (item != null)
             {
                 return Ok(item);
@@ -48,7 +53,7 @@ namespace ReviewAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            if (_gameRepository.Remove(id))
+            if (_iGame.Remove(id))
             {
                 return NoContent();
 
@@ -63,7 +68,7 @@ namespace ReviewAPI.Controllers
         [HttpPut]
         public ActionResult Update([FromBody] Game game)
         {
-            if (_gameRepository.Update(game))
+            if (_iGame.Update(game))
             {
                 return Ok();
 
@@ -78,7 +83,7 @@ namespace ReviewAPI.Controllers
         [HttpGet("gameAndReviews")]
         public ActionResult GameAndReviews(int gameId)
         {
-            return Ok(_gameRepository.GetGameAndReviews(gameId));
+            return Ok(_iGame.GetGameAndReviews(gameId));
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace ReviewAPI.Controllers
         [HttpGet("allByDescending")]
         public ActionResult AllGamesInOrderByDescending()
         {
-            return Ok(_gameRepository.GetGamesByDescendingOrder());
+            return Ok(_iGame.GetGamesByDescendingOrder());
         }
     }
 }

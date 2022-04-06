@@ -3,7 +3,7 @@ using ReviewAPI.Models;
 
 namespace ReviewAPI.Repository
 {
-    public class ReviewRepository : IRepository<ReviewDTO>
+    public class ReviewRepository : IReview
     {
         private ApplicationContext _context;
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ReviewAPI;
+using ReviewAPI.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,8 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
+builder.Services.AddScoped<IGame, GameRepository>();
+builder.Services.AddScoped<IReview, ReviewRepository>();
 
 var app = builder.Build();
 

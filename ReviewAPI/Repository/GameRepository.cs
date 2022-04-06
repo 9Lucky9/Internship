@@ -2,7 +2,7 @@
 
 namespace ReviewAPI.Repository
 {
-    public class GameRepository : IRepository<Game>
+    public class GameRepository : IGame
     {
         private ApplicationContext _context;
 
