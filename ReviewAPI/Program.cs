@@ -72,7 +72,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseMiddleware<TokenMiddleware>();
 
 app.MapControllers();
 
