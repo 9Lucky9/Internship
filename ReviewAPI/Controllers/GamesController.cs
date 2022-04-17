@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReviewAPI.Authentication;
 using ReviewAPI.Models;
 using ReviewAPI.Repository;
 
 namespace ReviewAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/games")]
     public class GamesController : ControllerBase
