@@ -1,4 +1,5 @@
 ﻿using ReviewAPI.Authentication;
+using ReviewAPI.Repository;
 
 namespace ReviewAPI
 {
@@ -10,13 +11,13 @@ namespace ReviewAPI
         {
             _next = next;
         }
-        public async Task Invoke(HttpContext context, IAuthentication Authentication)
+        public async Task Invoke(HttpContext context, IUser iUser)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var userId = TokenHelper.ValidateToken(token);
             if (userId != null)
             {
-                context.Items["User"] = Authentication.GetUser((int)userId);
+                context.Items["User"] = iUser.GetUser((int)userId);
             }
 
             await _next(context);
